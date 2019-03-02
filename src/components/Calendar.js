@@ -1,7 +1,5 @@
 import React, { Component } from 'react'
-import dateFns from 'date-fns'
 import {moment} from '../moment-custom.js'
-import shortid from 'shortid'
 
 import Day from './Day'
 import classes from './Calendar.module.scss'
@@ -25,6 +23,12 @@ export default class Calendar extends Component {
     }));
   }
 
+  selectDateHandler = (date) => {
+    this.setState({
+      selectedDate: date
+    })
+  }
+
   renderDays() {
     const dateFormat = "dddd";
     const days = [];
@@ -46,15 +50,15 @@ export default class Calendar extends Component {
   renderMonthDays = () => {
     const { currentMonth, selectedDate } = this.state;
     const days = []
-    const monthStart = moment(this.state.currentMonth).startOf('month');
-    const monthStartDayName = moment(this.state.currentMonth).startOf('month').day();
-    const monthEnd = moment(this.state.currentMonth).endOf('month').date();
+    const monthStart = moment(currentMonth).startOf('month');
+    const monthStartDayName = moment(currentMonth).startOf('month').day();
+    const monthEnd = moment(currentMonth).endOf('month').date();
     // const now = moment.now()
     let startDate = moment(currentMonth).startOf('week')
     const startWeekdayDayName = moment(currentMonth).startOf('week').day()
 
     const endDate =  moment(currentMonth).endOf('week')
-    const endWeekdayDayName =  moment(this.state.currentMonth).endOf('month').day();
+    const endWeekdayDayName =  moment(currentMonth).endOf('month').day();
     // console.log( endWeekdayDayName)
 
     //adding days from prev month
@@ -77,8 +81,15 @@ export default class Calendar extends Component {
     //days for current month
     for (let i = 0; i < monthEnd; i++) {
       const date = moment(monthStart).add(i, 'd')
+      const active = moment(selectedDate).format('MMMM D') === moment(date).format('MMMM D')
+        
+      
       days.push(
-        <div className={`${classes.day} ${classes.currentMonthDay}`} key={date.format()}>
+        <div 
+          className={`${classes.day} ${classes.currentMonthDay} ${active ? classes.active : ''}`} 
+          key={date.format()}
+          onClick={() => this.selectDateHandler(date)}
+        >
           {date.format('D')}
         </div>
       )

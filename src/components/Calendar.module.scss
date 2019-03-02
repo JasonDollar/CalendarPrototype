@@ -21,6 +21,10 @@
 }
 .day {
   text-align: center;
+  padding: 1rem;
+}
+.day.active {
+  background: forestgreen;
 }
 
 .otherMonthDay {
