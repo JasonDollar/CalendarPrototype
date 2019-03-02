@@ -50,7 +50,7 @@ export default class Calendar extends Component {
     const monthStartDayName = moment(this.state.currentMonth).startOf('month').day();
     const monthEnd = moment(this.state.currentMonth).endOf('month').date();
     // const now = moment.now()
-    const startDate = moment(currentMonth).startOf('week')
+    let startDate = moment(currentMonth).startOf('week')
     const startWeekdayDayName = moment(currentMonth).startOf('week').day()
 
     const endDate =  moment(currentMonth).endOf('week')
@@ -58,9 +58,16 @@ export default class Calendar extends Component {
     // console.log( endWeekdayDayName)
 
     //adding days from prev month
-    const prevMonthDays = monthStartDayName - startWeekdayDayName
+    let prevMonthDays = monthStartDayName - startWeekdayDayName
+    // debugger
+    if (prevMonthDays === -1) {
+      startDate = moment(currentMonth).subtract(1, 'd').startOf('week')
+      prevMonthDays = 7 - startWeekdayDayName
+    }
+    console.log(startDate.date(), prevMonthDays)
     for (let i = 0; i < prevMonthDays; i++) {
       const date = moment(startDate).add(i, 'd')
+      console.log(date)
       days.push(
         <div className={`${classes.day} ${classes.otherMonthDay}`} key={date.format()} onClick={this.prevMonth}>
           {date.format('D')}
@@ -81,7 +88,7 @@ export default class Calendar extends Component {
       return days
     }
     const remainingDays = 7 - endWeekdayDayName
-    console.log(monthEnd)
+    // console.log(monthEnd)
     for (let i = 0; i < remainingDays; i++) {
       const date = moment(monthEnd).add(i, 'd')
       days.push(
@@ -90,6 +97,7 @@ export default class Calendar extends Component {
         </div>
       )
     }
+    // console.log(days)
     return days
   }
   
