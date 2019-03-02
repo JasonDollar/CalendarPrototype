@@ -1,0 +1,29 @@
+.Calendar {
+
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+}
+
+.header {
+  grid-column: 1 / -1;
+  background: orangered;
+  display: flex;
+  justify-content: space-between;
+}
+
+.daysNames {
+  grid-column: 1 / -1;
+  display: flex;
+  & > * {
+    flex: 1 0 calc(100% / 7);
+    text-align: center;
+  }
+}
+.day {
+  text-align: center;
+}
+
+.otherMonthDay {
+  color: #888;
+  background: #ccc;
+}
