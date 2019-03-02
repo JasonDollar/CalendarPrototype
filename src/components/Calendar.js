@@ -42,14 +42,7 @@ export default class Calendar extends Component {
     return <div className={classes.daysNames}>{days}</div>;
   }
 
-  renderMonthDays2 = () => {
-    const { currentMonth, selectedDate } = this.state;
-    const monthStart = dateFns.startOfMonth(currentMonth);
-    const monthEnd = dateFns.endOfMonth(monthStart);
-    const startDate = dateFns.startOfWeek(monthStart);
-    const endDate = dateFns.endOfWeek(monthEnd);
-    console.log(monthStart, startDate)
-  }
+
   renderMonthDays = () => {
     const { currentMonth, selectedDate } = this.state;
     const days = []
